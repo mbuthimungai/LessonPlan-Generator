@@ -1,0 +1,25 @@
+.main {
+    justify-content: space-between;
+    padding: 20px 50px;
+    gap: 30px;
+}
+
+
+.dirUl {
+    line-height: 2;
+    font-style: italic;
+    color: var(--grey);
+}
+
+.textareaBox {
+    padding-top: 40px;
+}
+.textareaBox .textarea {
+    border: none;
+    padding: 0;
+}
+
+.textareaBox .textarea:focus, .textareaBox .textarea:hover {
+    outline: none;
+    border: none;
+}

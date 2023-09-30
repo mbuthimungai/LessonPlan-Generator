@@ -1,0 +1,23 @@
+.textareaDiv {
+    width: 100%;
+}
+
+.textarea {
+    width: 100%;
+    font-size: 16px;
+    color: var(--primaryTextColor);
+    overflow: hidden;
+    resize: none;
+    padding: 10px 20px;
+    border: 1.5px solid var(--borderColor);
+    border-radius: var(--borderRadius);
+}
+
+.textarea::placeholder {
+    color: var(--fadeTextColor)
+}
+
+.textarea:focus, .textarea:hover {
+    outline: none;
+    border:1.5px solid var(--lightRed);
+}

@@ -1,0 +1,20 @@
+.dropdown {
+    border: 1px solid var(--borderColor); /* default border color */
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    background-color: var(--lightGrey); /* background color for dropdown */
+    color: var(--fadeTextColor); /* text color for dropdown */
+    border-radius: var(--borderRadius);
+}
+
+.dropdown:focus, .dropdown:hover {
+    border-color: var(--lightRed); /* border color on hover */
+    outline: none;
+}
+
+.dropdown option {
+    background-color: white; /* background color for dropdown elements */
+    color: var(--primaryTextColor); /* text color for dropdown elements */
+    margin-bottom: 5px;
+}
