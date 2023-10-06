@@ -14,7 +14,9 @@ const TextArea = (props) => {
   }, []);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    const newValue = e.target.value;
+    setValue(newValue);
+    props.onTextChange && props.onTextChange(newValue);
     // Adjust the height whenever the content changes.
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -28,7 +30,7 @@ const TextArea = (props) => {
           className="textarea"
           name=""
           id=""
-          value={value}
+          value={props.value || value}
           onChange={handleChange}
           placeholder={props.placeholder}
         />

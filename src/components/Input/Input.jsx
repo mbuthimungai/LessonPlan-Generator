@@ -1,9 +1,11 @@
-import React, { useRef, useEffect } from "react";
+
+import React, { useState, useRef, useEffect } from "react";
 import "./Input.css"
 
 const Input = (props) => {
     const labelRef = useRef(null);
     const inputRef = useRef(null);
+    const [inputValue, setInputValue] = useState("");
 
     useEffect(() => {
         if (labelRef.current && inputRef.current) {
@@ -12,13 +14,17 @@ const Input = (props) => {
         }
     }, [props.label]);
 
+    const handleInputChange = (e) => {
+        const newValue = e.target.value;
+        setInputValue(newValue);
+        props.onInputChange && props.onInputChange(newValue);
+    };
+
     return (
-        <>
         <div className="inputDiv">
             {props.label && <label ref={labelRef} className="label">{props.label}</label>}
-            <input ref={inputRef} className="input" type="text" placeholder={props.placeholder}/>
+            <input ref={inputRef} value={inputValue} onChange={handleInputChange} className="input" type="text" placeholder={props.placeholder}/>
         </div>
-        </>
     )
 }
 

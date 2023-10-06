@@ -4,7 +4,9 @@ const Dropdown = (props) => {
     const [selected, setSelected] = useState("");
 
     const handleChange = (e) => {
-        setSelected(e.target.value);        
+        const newValue = e.target.value;
+        setSelected(newValue);
+        props.onSelectChange && props.onSelectChange(newValue);        
     };
 
     return (

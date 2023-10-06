@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Generate.css"
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Input from "../../components/Input/Input";
@@ -27,6 +27,34 @@ const Generate = () => {
          optname: "Career and Technical Education"},
          
     ] 
+    const [gradeLevelValue, setGradeLevelValue] = useState("");
+    const [subjectValue, setSubjectValue] = useState("");
+    const [lessonTitle, setLessonTitle] = useState("");
+    const [lessonDescription, setLessonDescription] = useState("");
+    const [serverResponse, setServerResponse] = useState("");
+
+    const handleGenerateClick = async () => {
+        const data = {
+            grade_level: gradeLevelValue,
+            subject: subjectValue,
+            lesson_title: lessonTitle,
+            lesson_description: lessonDescription
+        };
+        
+        console.log("Sending data:", data);
+        try {
+            const response = await fetch("http://localhost:8000/api/v1/prompt", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            const responseData = await response.json();
+            setServerResponse(responseData.plan);  // assuming the response has a 'lesson' property
+            console.log(responseData)
+        } catch (error) {
+            console.error("Error sending data:", error);
+        }
+    }
     return (
         <>
             <div className="column main">
@@ -49,7 +77,8 @@ const Generate = () => {
                         id="gradeLevelDrpdwn"
                         items={gradeLevels}
                         placeholder="Select a grade level"
-                        />
+                        onSelectChange={setGradeLevelValue}
+                    />
                     </div>
                     <div className="p20">
                         <h2 className="colorGrey p10">
@@ -60,22 +89,26 @@ const Generate = () => {
                         id="subjectDrpdwn"
                         items={subjects}
                         placeholder="Select a subject"
-                        />
+                        onSelectChange={setSubjectValue}
+                    />
                     </div>
                     <div className="p20">
                         <h2 className="colorGrey p10">Lesson title</h2>
-                        <Input placeholder="Add a lesson title or topic"
+                        <Input 
+                        placeholder="Add a lesson title or topic"
                         label="Lesson plan on:"
-                        />
+                        onInputChange={setLessonTitle}
+                    />
                     </div>                                        
                     <div className="p20">
                         <h2 className="colorGrey p10">Lesson Description</h2>
-                        <TextArea
-                        placeholder="Type something like this: How music is used in native american tribes"
-                        />
+                        <TextArea 
+                        placeholder="Type something like this: How music is used in native american tribes."
+                        onTextChange={setLessonDescription}
+                    />
                     </div>
                     
-                    <Button name="Generate"/>
+                    <Button name="Generate" onClick={handleGenerateClick}/>
                 </div>
                 <div className="directions whiteBg leftText p30">
                     <h2 className="colorGrey p10">Directions:</h2>
@@ -90,7 +123,11 @@ const Generate = () => {
                         </li>
                     </ul>
                     <div className="textareaBox">
-                        <TextArea placeholder="Your lesson will appear here..."/>
+                    <TextArea 
+                        value={serverResponse}
+                        placeholder="Your lesson will appear here..."
+                        onTextChange={setLessonDescription}
+                    />
                     </div>
                     
                 </div>
